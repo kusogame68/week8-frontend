@@ -1,2 +1,2 @@
 ## pages: 
-https://kusogame68.github.io/week8-fontend/
+https://kusogame68.github.io/week8-frontend/

@@ -17,6 +17,7 @@ const commonMessage = (title, icon = "success") => Swal.fire({
         timerProgressBar: true
     });
 const confirmMessage = (title) => Swal.fire({
+        toast: true,
         title: title,
         icon: "question",
         showCancelButton: true,
@@ -74,7 +75,7 @@ let cartData = {};
 
 const generateCartStr = () => cartData.carts.map(item => {
     const total = item.product.price * item.quantity;
-    return `<tr data-cart-id="${item.id}">
+    return `<tr>
         <td>
             <div class="cardItem-title">
                 <img src="${item.product.images}" alt="">
@@ -85,7 +86,7 @@ const generateCartStr = () => cartData.carts.map(item => {
         <td>${item.quantity}</td>
         <td>NT$${total.toLocaleString()}</td>
         <td class="discardBtn">
-            <a href="#" class="material-icons">
+            <a href="#" class="material-icons" data-cart-id="${item.id}">
                 clear
             </a>
         </td>
@@ -184,14 +185,10 @@ const deleteCartItem = async cartId => {
     }
 }
 
-
-
 const shoppingCartTableTbodyListener = async e => {
     e.preventDefault();
-    const discardBtn = e.target.closest(".discardBtn");
-
-    if (!discardBtn) return;
-    deleteCartItem(discardBtn.closest("tr").dataset.cartId);
+    const cartId = e.target.dataset.cartId;
+    if (cartId) deleteCartItem(cartId);
 }
 
 shoppingCartTableTbody.addEventListener("click", shoppingCartTableTbodyListener);
